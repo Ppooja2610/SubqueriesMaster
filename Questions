@@ -1,0 +1,72 @@
+Q1.Using the following query as a starting point, include the average OrderPrice for all orders within the result.
+select OrderDate, LastName, OrderPrice
+from CustomerOrderSummary
+
+Q2.Use the EmployeeDetail object to return a result containing the following columns:
+ShopName, FirstNAme, LastNAme, StartDate, TerminationDate, IsActive, NumberEmployees
+NumberEmployees includes all active and inactive employees from all shops.
+
+Q3.Use the EmployeeDetail object to return a result containing the following columns:
+ShopName, FirstName, LastName, StartDate, TerminationDate, IsActive, NumberEmployees
+NumberEmployees includes all active employees from all shops.
+
+Q4.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice.
+Where:  The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view
+Round the AvgFinalOrderPrice to two decimal places using the Round() function.
+
+Q5.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice, and FinalDifference
+Where:The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view 
+and FinalDifference is the FinalOrderPrice minus the AvgFinalOrderPrice.
+
+Q6.There are three coupons in the Coupon table.  Have all of them been used by customers?
+Let's check but writing a query to display the CouponName, and CouponDescription of each coupon used in at least one CustomerOrder.
+
+Q7.What customer orders were made with no beverages; meaning, who ordered pizza or sandwiches without ordering a coke product?
+To answer this question I would recommend studying the PizzaDB ER diagram.  You can use the CustomerOrderSummary view to simplify the query a bit.  Also, to help those not too comfortable with inner joins, you can use this code in your sub query to find all the beverage order items:
+select o.CustomerOrderId --order with beverages
+from CustomerOrder o
+    inner join CustomerOrderItem i on o.CustomerOrderID = i.CustomerOrderID
+    inner join Product p on i.ProductID = p.ProductID and p.ProductType = 'B' -- B = Beverages
+But, in order for this query to work, you'll need to use the exists clause and a correlated sub query.
+Find all CustomerOrderItems where the product item is or ProductType P.Include  CustomerOrderItemID, CustomerOrderID, ProductID and Quantity in your result.
+
+Select all the customers that have final order prices > 45.
+Include LastName, Email, StreetAddress, City, and StateProvidence in the result.
+
+
+Q8.Here is a count of customer orders by last Name:
+select LastName, count(1) OrderCount
+from CustomerOrderSummary
+group by LastName
+order by OrderCount desc
+Using subqueries, and not inner joins, can you list all the customers that ordered at least 8 times?
+Include the customer's LastName, Email, StreetAddress, City, and StateProvidence in your result.
+
+
+Q9.Which products have an price that is greater than the average price for the all products of the same product types?
+Include the ProductID, ProductName, ProductType, Price, and AveragePrice where AveragePrice is the average price 
+for all product within the same product type in your result.
+
+
+Q10.If you were to calculate the average price for each product type, and then calculate the average product price from that result, what is the final result?
+Include the AvgPrice where AvgPrice is the Average of the average prices within a product type as the column for
+you result.  I provided part of the query for you to use.
+select ProductType, avg(price) AvgPrice
+from Product
+group by ProductType
+
+Q11.Just to get used to writing derived tables, take the following query
+select LastName, Avg(FinalOrderPrice) AvgFinalOrderPrice
+from CustomerOrderSummary
+group by LastName
+
+Q12.Let's compare for each customer the sum of the final order price for date on or before 2022-03-05 to the sum after 2022-03-05.
+Include CustomerID, LastName, PriceTotal1, and PriceTotal2 in  your result where:
+PriceTotal1 is the sum of all FinalOrderPrice values by customer on or before 2022-03-05
+PriceTotal2 is the sum of all FinalOrderPrice values by customer after 2022-03-05
+
+Q13.Using derived tables along with the CustomerOrderSummary view, create a sales summary report by customer.
+The report should include the following columns:
+OrderDate, CustomerID, LastName, DailySalesTotal, GrandSalesTotal
+Where DailySalesTotal is the sum of the FinalOrderPrice by CustomerID and OrderDate
+FinalOrderPrice is the sum of the FinalOrderPrice by CustomerID
