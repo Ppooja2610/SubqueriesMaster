@@ -4,14 +4,14 @@ from CustomerOrderSummary
 
 select OrderDate, LastName, OrderPrice,(SELECT avg(orderprice) from CustomerOrderSummary) as Avgprice
 from CustomerOrderSummary
-
+-------------------------------------------------------------------------------------
 Q2.Use the EmployeeDetail object to return a result containing the following columns:
 ShopName, FirstNAme, LastNAme, StartDate, TerminationDate, IsActive, NumberEmployees
 NumberEmployees includes all active and inactive employees from all shops.
 
 select ShopName, FirstNAme, LastNAme, StartDate, TerminationDate, IsActive, 
 (SELECT COUNT(*) from EmployeeDetail) as NumberEmployees  from EmployeeDetail
-
+---------------------------------------------------------------------------------------
 Q3.Use the EmployeeDetail object to return a result containing the following columns:
 ShopName, FirstName, LastName, StartDate, TerminationDate, IsActive, NumberEmployees
 NumberEmployees includes all active employees from all shops.
@@ -19,7 +19,7 @@ NumberEmployees includes all active employees from all shops.
 SELECT ShopName, FirstName, LastName, StartDate, TerminationDate
 , IsActive, (SELECT COUNT(*) FROM EmployeeDetail WHERE isactive=1) as NumberEmployees
 FROM EmployeeDetail
-
+-----------------------------------------------------------------------------------
 Q4.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice.
 Where:  The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view
 Round the AvgFinalOrderPrice to two decimal places using the Round() function.
@@ -27,7 +27,7 @@ Round the AvgFinalOrderPrice to two decimal places using the Round() function.
 SELECT OrderDate, LastName,FinalOrderPrice
 ,(SELECT ROUND(AVG(customerordersummary.finalorderprice),2) FROM  CustomerOrderSummary) as AvgFinalOrderPrice 
 FROM CustomerOrderSummary
-
+------------------------------------------------------------------------------------
 Q5.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice, and FinalDifference
 Where:The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view 
 and FinalDifference is the FinalOrderPrice minus the AvgFinalOrderPrice.
@@ -37,7 +37,7 @@ SELECT  OrderDate, LastName, FinalOrderPrice,
 (FinalOrderPrice - (SELECT (Avg(FinalOrderPrice)) from CustomerOrderSummary) ) AS FinalDifference
 FROM CustomerOrderSummary
 
-
+----------------------------------------------------------------------------------
 Q6.There are three coupons in the Coupon table.  Have all of them been used by customers?
 Let's check but writing a query to display the CouponName, and CouponDescription of each coupon used in at least one CustomerOrder.
 
@@ -45,7 +45,7 @@ SELECT couponname
 ,CouponDescription 
 FROM coupon
 WHERE couponid in (SELECT couponid from CustomerOrder )
-
+---------------------------------------------------------------------------
 Q7.What customer orders were made with no beverages; meaning, who ordered pizza or sandwiches without ordering a coke product?
 To answer this question I would recommend studying the PizzaDB ER diagram.  You can use the CustomerOrderSummary view to simplify the query a bit.  Also, to help those not too comfortable with inner joins, you can use this code in your sub query to find all the beverage order items:
 select o.CustomerOrderId --order with beverages
@@ -58,7 +58,7 @@ Find all CustomerOrderItems where the product item is or ProductType P.Include  
 Select all the customers that have final order prices > 45.
 Include LastName, Email, StreetAddress, City, and StateProvidence in the result.
 
-
+----------------------------------------------------------------------------
 Q8.Here is a count of customer orders by last Name:
 select LastName, count(1) OrderCount
 from CustomerOrderSummary
@@ -74,10 +74,11 @@ from CustomerOrderSummary
 group by LastName
 HAVING COUNT(*) >= 8
 )
+------------------------------------------------------------------
 Q9.Which products have an price that is greater than the average price for the all products of the same product types?
 Include the ProductID, ProductName, ProductType, Price, and AveragePrice where AveragePrice is the average price 
 for all product within the same product type in your result.
-
+-----------------------------------------------------------------------
 
 Q10.If you were to calculate the average price for each product type, and then calculate the average product price from that result, what is the final result?
 Include the AvgPrice where AvgPrice is the Average of the average prices within a product type as the column for
@@ -85,7 +86,7 @@ you result.  I provided part of the query for you to use.
 select ProductType, avg(price) AvgPrice
 from Product
 group by ProductType
-
+------------------------------------------------------------------------
 Q11.Just to get used to writing derived tables, take the following query
 select LastName, Avg(FinalOrderPrice) AvgFinalOrderPrice
 from CustomerOrderSummary
