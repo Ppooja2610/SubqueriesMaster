@@ -24,12 +24,27 @@ Q4.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOr
 Where:  The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view
 Round the AvgFinalOrderPrice to two decimal places using the Round() function.
 
+SELECT OrderDate, LastName,FinalOrderPrice
+,(SELECT ROUND(AVG(customerordersummary.finalorderprice),2) FROM  CustomerOrderSummary) as AvgFinalOrderPrice 
+FROM CustomerOrderSummary
+
 Q5.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice, and FinalDifference
 Where:The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view 
 and FinalDifference is the FinalOrderPrice minus the AvgFinalOrderPrice.
 
+SELECT  OrderDate, LastName, FinalOrderPrice,
+(SELECT AVG(finalorderprice) from CustomerOrderSummary) as AvgFinalOrderPrice, 
+(FinalOrderPrice - (SELECT (Avg(FinalOrderPrice)) from CustomerOrderSummary) ) AS FinalDifference
+FROM CustomerOrderSummary
+
+
 Q6.There are three coupons in the Coupon table.  Have all of them been used by customers?
 Let's check but writing a query to display the CouponName, and CouponDescription of each coupon used in at least one CustomerOrder.
+
+SELECT couponname
+,CouponDescription 
+FROM coupon
+WHERE couponid in (SELECT couponid from CustomerOrder )
 
 Q7.What customer orders were made with no beverages; meaning, who ordered pizza or sandwiches without ordering a coke product?
 To answer this question I would recommend studying the PizzaDB ER diagram.  You can use the CustomerOrderSummary view to simplify the query a bit.  Also, to help those not too comfortable with inner joins, you can use this code in your sub query to find all the beverage order items:
