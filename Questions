@@ -67,7 +67,13 @@ order by OrderCount desc
 Using subqueries, and not inner joins, can you list all the customers that ordered at least 8 times?
 Include the customer's LastName, Email, StreetAddress, City, and StateProvidence in your result.
 
-
+SELECT LastName, Email, StreetAddress, City,StateProvidence
+from customer where LASTNAME IN (
+select LastName
+from CustomerOrderSummary
+group by LastName
+HAVING COUNT(*) >= 8
+)
 Q9.Which products have an price that is greater than the average price for the all products of the same product types?
 Include the ProductID, ProductName, ProductType, Price, and AveragePrice where AveragePrice is the average price 
 for all product within the same product type in your result.
