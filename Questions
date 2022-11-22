@@ -78,6 +78,11 @@ HAVING COUNT(*) >= 8
 Q9.Which products have an price that is greater than the average price for the all products of the same product types?
 Include the ProductID, ProductName, ProductType, Price, and AveragePrice where AveragePrice is the average price 
 for all product within the same product type in your result.
+
+SELECT producttype,AVG(price)
+from product 
+group by producttype
+having AVG(price) > (SELECT AVG(price) from product )
 -----------------------------------------------------------------------
 
 Q10.If you were to calculate the average price for each product type, and then calculate the average product price from that result, what is the final result?
