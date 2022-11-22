@@ -96,12 +96,12 @@ Q11.Just to get used to writing derived tables, take the following query
 select LastName, Avg(FinalOrderPrice) AvgFinalOrderPrice
 from CustomerOrderSummary
 group by LastName
-
+-----------------------------------------------------------------------------
 Q12.Let's compare for each customer the sum of the final order price for date on or before 2022-03-05 to the sum after 2022-03-05.
 Include CustomerID, LastName, PriceTotal1, and PriceTotal2 in  your result where:
 PriceTotal1 is the sum of all FinalOrderPrice values by customer on or before 2022-03-05
 PriceTotal2 is the sum of all FinalOrderPrice values by customer after 2022-03-05
-
+------------------------------------------------------------------------------
 Q13.Using derived tables along with the CustomerOrderSummary view, create a sales summary report by customer.
 The report should include the following columns:
 OrderDate, CustomerID, LastName, DailySalesTotal, GrandSalesTotal
