@@ -2,13 +2,23 @@ Q1.Using the following query as a starting point, include the average OrderPrice
 select OrderDate, LastName, OrderPrice
 from CustomerOrderSummary
 
+select OrderDate, LastName, OrderPrice,(SELECT avg(orderprice) from CustomerOrderSummary) as Avgprice
+from CustomerOrderSummary
+
 Q2.Use the EmployeeDetail object to return a result containing the following columns:
 ShopName, FirstNAme, LastNAme, StartDate, TerminationDate, IsActive, NumberEmployees
 NumberEmployees includes all active and inactive employees from all shops.
 
+select ShopName, FirstNAme, LastNAme, StartDate, TerminationDate, IsActive, 
+(SELECT COUNT(*) from EmployeeDetail) as NumberEmployees  from EmployeeDetail
+
 Q3.Use the EmployeeDetail object to return a result containing the following columns:
 ShopName, FirstName, LastName, StartDate, TerminationDate, IsActive, NumberEmployees
 NumberEmployees includes all active employees from all shops.
+
+SELECT ShopName, FirstName, LastName, StartDate, TerminationDate
+, IsActive, (SELECT COUNT(*) FROM EmployeeDetail WHERE isactive=1) as NumberEmployees
+FROM EmployeeDetail
 
 Q4.Using the CustomerOrderSummary view, display the OrderDate, LastName, FinalOrderPrice and AvgFinalOrderPrice.
 Where:  The AvgFinalOrderPrice is the average of all FinalOrderPrices in the CustomerOrderSummary view
